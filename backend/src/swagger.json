@@ -1,0 +1,418 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Appointment Web Application",
+    "version": "1.0.0",
+    "description": "API documentation for the Appointment Web Application"
+  },
+  "basePath": "base_url",
+  "schemes": ["http"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "identifier": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful login"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create User",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update User",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          }
+        }
+      }
+    },
+    "/user/all": {
+      "get": {
+        "summary": "Get All Users",
+        "responses": {
+          "200": {
+            "description": "List of all users"
+          }
+        }
+      }
+    },
+    "/user/dashboard": {
+      "get": {
+        "summary": "Get Dashboard",
+        "responses": {
+          "200": {
+            "description": "Dashboard data"
+          }
+        }
+      }
+    },
+    "/user/addAddress": {
+      "put": {
+        "summary": "Add User Address",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "address",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "street": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User address added successfully"
+          }
+        }
+      }
+    },
+    "/appointments": {
+      "post": {
+        "summary": "Create Appointment",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment created successfully"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Appointment",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment updated successfully"
+          }
+        }
+      }
+    },
+    "/appointments/attachment": {
+      "get": {
+        "summary": "Get Attachments",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filename",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment data"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Attachment",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "attachmentsId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment deleted successfully"
+          }
+        }
+      }
+    },
+    "/appointments/changeAppointmentStatus": {
+      "put": {
+        "summary": "Change Appointment Status",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentStatusChange"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment status changed successfully"
+          }
+        }
+      }
+    },
+    "/appointments/assignAppointmentToHealthcareUser": {
+      "put": {
+        "summary": "Assign Appointment To Healthcare User",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentAssignment"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment assigned to healthcare user successfully"
+          }
+        }
+      }
+    },
+    "/appointments/{appointmentId}": {
+      "delete": {
+        "summary": "Delete Appointment",
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment deleted successfully"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AppointmentCreate": {
+      "type": "object",
+      "properties": {
+        "desiredDateTime": {
+          "type": "integer"
+        },
+        "patient": {
+          "type": "string"
+        },
+        "healthcareUser": {
+          "type": "string"
+        },
+        "appointmentNotes": {
+          "type": "string"
+        },
+        "paymentMode": {
+          "type": "string"
+        },
+        "fees": {
+          "type": "number"
+        },
+        "isPaymentReceived": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        }
+      }
+    },
+    "AppointmentUpdate": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Attachment"
+          }
+        }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "AppointmentStatusChange": {
+      "type": "object",
+      "properties": {
+        "appointmentId": {
+          "type": "string"
+        },
+        "newStatus": {
+          "type": "string"
+        }
+      }
+    },
+    "AppointmentAssignment": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "healthcareUserId": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
